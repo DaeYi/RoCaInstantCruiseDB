@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Club Royale Instant Cruise Offers</title>
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:   #003087;
+      --gold:   #c8a84b;
+      --gold-lt:#f0d98a;
+      --white:  #ffffff;
+      --off:    #f5f7fa;
+      --border: #dde3ec;
+      --text:   #1a2340;
+      --muted:  #6b7a99;
+      --green:  #1a7f4b;
+      --radius: 8px;
+      --shadow: 0 2px 12px rgba(0,48,135,.10);
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--off);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── Header ──────────────────────────────────────────────────── */
+    header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--gold);
+    }
+    .header-subtitle {
+      font-size: 13px;
+      color: rgba(255,255,255,.7);
+      padding-left: 12px;
+      border-left: 1px solid rgba(255,255,255,.2);
+    }
+    .header-meta {
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+      text-align: right;
+    }
+    #last-updated { color: var(--gold-lt); }
+
+    /* ── Layout ──────────────────────────────────────────────────── */
+    .app { display: flex; height: calc(100vh - 60px - 36px); overflow: hidden; }
+
+    /* ── Footer ──────────────────────────────────────────────────── */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 36px;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--muted);
+      z-index: 100;
+      padding: 0 24px;
+      text-align: center;
+    }
+    footer a { color: var(--muted); text-decoration: underline; }
+
+    /* ── Sidebar Filters ─────────────────────────────────────────── */
+    aside {
+      width: 320px;
+      min-width: 320px;
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .filter-section { display: flex; flex-direction: column; gap: 8px; }
+    .filter-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--muted);
+    }
+    .filter-section input[type="text"],
+    .filter-section input[type="date"],
+    .filter-section select {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 13px;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color .15s;
+    }
+    .filter-section input:focus,
+    .filter-section select:focus { border-color: var(--navy); }
+
+    .date-row { display: flex; gap: 6px; align-items: center; }
+    .date-row span { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .date-row input { flex: 1; }
+
+    .checkbox-group { display: flex; flex-direction: column; gap: 5px; }
+    .checkbox-group.scrollable {
+      max-height: 120px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 8px;
+    }
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      padding: 3px 0;
+    }
+    .checkbox-group input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--navy);
+      cursor: pointer;
+    }
+    .badge {
+      margin-left: auto;
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1px 7px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .points-display {
+      background: var(--navy);
+      color: var(--white);
+      text-align: center;
+      padding: 6px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    #points-value { color: var(--gold-lt); }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--navy);
+      cursor: pointer;
+    }
+
+    .btn-reset {
+      width: 100%;
+      padding: 9px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-reset:hover { background: #00206e; }
+
+    /* ── Main Content ────────────────────────────────────────────── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      gap: 12px;
+    }
+    .result-count {
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .result-count strong { color: var(--text); }
+
+    .sort-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+    .sort-wrap label { color: var(--muted); white-space: nowrap; }
+    .sort-wrap select {
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 13px;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+    }
+
+    /* ── Table ───────────────────────────────────────────────────── */
+    .table-wrap {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--navy);
+      color: var(--white);
+    }
+    th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    th:hover { background: #00206e; }
+    th.sorted-asc::after  { content: " ▲"; font-size: 9px; }
+    th.sorted-desc::after { content: " ▼"; font-size: 9px; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background .1s;
+    }
+    tbody tr:hover { background: #eef2ff; }
+    tbody tr:nth-child(even) { background: var(--off); }
+    tbody tr:nth-child(even):hover { background: #eef2ff; }
+
+    td {
+      padding: 9px 14px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    td.wrap { white-space: normal; max-width: 240px; }
+
+    .chip {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .chip-interior  { background: #e8f0fe; color: #1a3a8a; }
+    .chip-oceanview { background: #e8f7ef; color: #1a5c3a; }
+    .chip-balcony   { background: #fff8e1; color: #7a5a00; }
+    .chip-suite     { background: #fce4ec; color: #7a0025; }
+    .chip-default   { background: #f0f0f0; color: #555; }
+
+    .chip-1guest { background: #e3f2fd; color: #1a5276; }
+    .chip-2guest { background: #e8f5e9; color: #1a5c3a; }
+
+    .bonus-tag {
+      display: inline-block;
+      padding: 2px 7px;
+      background: var(--green);
+      color: #fff;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .points-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--navy);
+      color: var(--gold-lt);
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .code-btn {
+      font-family: monospace;
+      font-size: 12px;
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 7px;
+      cursor: pointer;
+      color: var(--navy);
+      font-weight: 600;
+      transition: background .1s;
+    }
+    .code-btn:hover { background: #dde3ec; }
+    .code-btn.copied { background: #e8f7ef; color: var(--green); border-color: var(--green); }
+
+    /* ── Empty / Loading ─────────────────────────────────────────── */
+    .empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: var(--muted);
+      font-size: 15px;
+      gap: 8px;
+    }
+    .empty .icon { font-size: 40px; }
+
+    #loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      font-size: 16px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-brand">
+    <div class="header-logo">♠ Club Royale</div>
+    <div class="header-subtitle">Instant Cruise Offer Database</div>
+  </div>
+  <div class="header-meta">
+    <div>Royal Caribbean Casino Offers</div>
+    <div>Updated: <span id="last-updated">—</span></div>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- ── Sidebar ──────────────────────────────────────────────────── -->
+  <aside>
+
+    <!-- Search -->
+    <div class="filter-section">
+      <div class="filter-label">Search Itinerary / Ship / Port</div>
+      <input type="text" id="f-search" placeholder="e.g. Caribbean, Miami, Wonder…" />
+    </div>
+
+    <!-- Sailing Month -->
+    <div class="filter-section">
+      <div class="filter-label">My Sailing Month</div>
+      <select id="f-sailing-month">
+        <option value="">All months</option>
+      </select>
+    </div>
+
+    <!-- Points -->
+    <div class="filter-section">
+      <div class="filter-label">Points Required</div>
+      <div class="date-row">
+        <input type="text" id="f-points-min" placeholder="Min" style="width:80px;text-align:center;" />
+        <span>to</span>
+        <input type="text" id="f-points-max" placeholder="Max" style="width:80px;text-align:center;" />
+      </div>
+    </div>
+
+    <!-- Sail Dates -->
+    <div class="filter-section">
+      <div class="filter-label">Sail Date Range</div>
+      <div class="date-row">
+        <input type="date" id="f-date-from" />
+        <span>to</span>
+        <input type="date" id="f-date-to" />
+      </div>
+    </div>
+
+    <!-- Nights -->
+    <div class="filter-section">
+      <div class="filter-label">Number of Nights</div>
+      <div class="date-row">
+        <input type="text" id="f-nights-min" placeholder="Min" style="width:60px;text-align:center;" />
+        <span>to</span>
+        <input type="text" id="f-nights-max" placeholder="Max" style="width:60px;text-align:center;" />
+      </div>
+    </div>
+
+    <!-- Stateroom -->
+    <div class="filter-section">
+      <div class="filter-label">Stateroom Type</div>
+      <div class="checkbox-group scrollable" id="f-stateroom"></div>
+    </div>
+
+    <!-- Guests -->
+    <div class="filter-section">
+      <div class="filter-label">Guests Covered</div>
+      <div class="checkbox-group" id="f-guests">
+        <label><input type="checkbox" value="1" checked /> 1 Guest</label>
+        <label><input type="checkbox" value="2" checked /> 2 Guests</label>
+      </div>
+    </div>
+
+    <!-- Next Cruise Bonus -->
+    <div class="filter-section">
+      <div class="filter-label">Next Cruise Bonus</div>
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" id="f-bonus-only" />
+          Only show offers with bonus
+        </label>
+      </div>
+    </div>
+
+    <!-- Departure Port -->
+    <div class="filter-section">
+      <div class="filter-label">Departure Port</div>
+      <div class="checkbox-group scrollable" id="f-port"></div>
+    </div>
+
+    <!-- Ship -->
+    <div class="filter-section">
+      <div class="filter-label">Ship</div>
+      <div class="checkbox-group scrollable" id="f-ship"></div>
+    </div>
+
+    <button class="btn-reset" onclick="resetFilters()">↺ Reset All Filters</button>
+
+  </aside>
+
+  <!-- ── Main ─────────────────────────────────────────────────────── -->
+  <main>
+    <div class="toolbar">
+      <div class="result-count" id="result-count">Loading…</div>
+      <div class="sort-wrap">
+        <label for="sort-select">Sort by:</label>
+        <select id="sort-select" onchange="renderTable()">
+          <option value="sail_date">Sail Date (earliest first)</option>
+          <option value="sail_date_desc">Sail Date (latest first)</option>
+          <option value="points_asc">Points (lowest first)</option>
+          <option value="points_desc">Points (highest first)</option>
+          <option value="nights_asc">Nights (shortest first)</option>
+          <option value="nights_desc">Nights (longest first)</option>
+          <option value="ship">Ship (A–Z)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div id="loading">Loading cruise offers…</div>
+      <table id="cruise-table" style="display:none">
+        <thead>
+          <tr>
+            <th onclick="setSort('points_asc','points_desc')" id="th-points">Points</th>
+            <th onclick="setSort('sail_date','sail_date_desc')" id="th-date">Sail Date</th>
+            <th onclick="setSort('nights_asc','nights_desc')" id="th-nights">Nights</th>
+            <th onclick="setSort('ship','ship')" id="th-ship">Ship</th>
+            <th>Departure Port</th>
+            <th>Itinerary</th>
+            <th>Stateroom</th>
+            <th>Guests</th>
+            <th>Bonus</th>
+            <th>Offer Code</th>
+          </tr>
+        </thead>
+        <tbody id="cruise-tbody"></tbody>
+      </table>
+      <div id="empty-msg" class="empty" style="display:none">
+        <div class="icon">🔍</div>
+        <div>No cruises match your filters.</div>
+        <div style="font-size:12px;color:var(--muted)">Try adjusting your search criteria.</div>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<footer>
+  CruiseDeck is an independent, community-built tool and is not affiliated with, endorsed by, or sponsored by Royal Caribbean International, Royal Caribbean Group, or any of their subsidiaries or related companies. All cruise offer data is sourced from publicly available materials. Royal Caribbean® and related marks are trademarks of Royal Caribbean Cruises Ltd.
+</footer>
+
+<script>
+// ── Decryption ─────────────────────────────────────────────────────────────
+const DATA_KEY_HEX = "4a7d3e8b2c1f9a5e6d0b7c4f2e8a1b3d5c9f7e2a4b6d8f0c2e4a6b8d0f2e4a6b";
+let _cryptoKey = null;
+
+async function getKey() {
+  if (_cryptoKey) return _cryptoKey;
+  const keyBytes = new Uint8Array(DATA_KEY_HEX.match(/.{2}/g).map(h => parseInt(h, 16)));
+  _cryptoKey = await crypto.subtle.importKey(
+    'raw', keyBytes, { name: 'AES-GCM' }, false, ['decrypt']
+  );
+  return _cryptoKey;
+}
+
+async function fetchDecrypted(url) {
+  const resp = await fetch(url);
+  const b64 = await resp.text();
+  const raw = Uint8Array.from(atob(b64.trim()), c => c.charCodeAt(0));
+  const key = await getKey();
+  const plaintext = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv: raw.slice(0, 12) }, key, raw.slice(12)
+  );
+  return JSON.parse(new TextDecoder().decode(plaintext));
+}
+
+// ── State ──────────────────────────────────────────────────────────────────
+let allCruises = [];
+let filteredCruises = [];
+let currentSort = 'sail_date';
+let availableMonths = [];
+
+// ── Load Data ──────────────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const index = await fetchDecrypted('data/index.json');
+
+    availableMonths = index.months || [];
+    const upd = index.last_updated
+      ? new Date(index.last_updated).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'})
+      : '—';
+    document.getElementById('last-updated').textContent = upd;
+
+    const monthData = await Promise.all(
+      availableMonths.map(m => fetchDecrypted(`data/${m}.json`))
+    );
+    allCruises = monthData.flatMap(d => d.cruises || []);
+
+    populateFilterOptions();
+    applyFilters();
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('cruise-table').style.display = '';
+  } catch (e) {
+    document.getElementById('loading').textContent = 'Error loading data. Make sure index.json exists.';
+    console.error(e);
+  }
+}
+
+// ── Populate Dynamic Filter Options ───────────────────────────────────────
+function populateFilterOptions() {
+  // Stateroom types
+  const staterooms = [...new Set(allCruises.map(c => c.stateroom_type).filter(Boolean))].sort();
+  const stateroomOrder = ['Interior','Oceanview','Balcony','Suite'];
+  staterooms.sort((a,b) => {
+    const ia = stateroomOrder.indexOf(a), ib = stateroomOrder.indexOf(b);
+    if (ia === -1 && ib === -1) return a.localeCompare(b);
+    if (ia === -1) return 1;
+    if (ib === -1) return -1;
+    return ia - ib;
+  });
+  const sg = document.getElementById('f-stateroom');
+  sg.innerHTML = staterooms.map(s =>
+    `<label><input type="checkbox" value="${s}" checked /> ${s}</label>`
+  ).join('');
+
+  // Ports
+  const ports = [...new Set(allCruises.map(c => portFull(c)).filter(Boolean))].sort();
+  document.getElementById('f-port').innerHTML = ports.map(p =>
+    `<label><input type="checkbox" value="${p}" checked /> ${p}</label>`
+  ).join('');
+
+  // Ships
+  const ships = [...new Set(allCruises.map(c => c.ship).filter(Boolean))].sort();
+  document.getElementById('f-ship').innerHTML = ships.map(s =>
+    `<label><input type="checkbox" value="${s}" checked /> ${s}</label>`
+  ).join('');
+
+  // Sailing months (from index.json)
+  const monthSel = document.getElementById('f-sailing-month');
+  availableMonths.forEach(yymm => {
+    const o = document.createElement('option');
+    o.value = yymm;
+    o.textContent = formatYYMM(yymm);
+    monthSel.appendChild(o);
+  });
+}
+
+// ── Filtering ──────────────────────────────────────────────────────────────
+function getCheckedValues(groupId) {
+  return [...document.querySelectorAll(`#${groupId} input[type=checkbox]:checked`)]
+    .map(cb => cb.value);
+}
+
+function applyFilters() {
+  const search = document.getElementById('f-search').value.trim().toLowerCase();
+  const sailingMonth = document.getElementById('f-sailing-month').value;
+  const ptsMin = parseInt(document.getElementById('f-points-min').value) || 0;
+  const ptsMax = parseInt(document.getElementById('f-points-max').value) || Infinity;
+  const dateFrom = document.getElementById('f-date-from').value;
+  const dateTo = document.getElementById('f-date-to').value;
+  const nightsMin = parseInt(document.getElementById('f-nights-min').value) || 0;
+  const nightsMax = parseInt(document.getElementById('f-nights-max').value) || 999;
+  const staterooms = getCheckedValues('f-stateroom');
+  const guests = getCheckedValues('f-guests').map(Number);
+  const bonusOnly = document.getElementById('f-bonus-only').checked;
+  const ports = getCheckedValues('f-port');
+  const ships = getCheckedValues('f-ship');
+
+  filteredCruises = allCruises.filter(c => {
+    if (sailingMonth && !(c.offer_code || '').startsWith(sailingMonth)) return false;
+    if (c.points_required < ptsMin) return false;
+    if (c.points_required > ptsMax) return false;
+    if (dateFrom && c.sail_date < dateFrom) return false;
+    if (dateTo && c.sail_date > dateTo) return false;
+    if (c.nights !== null && (c.nights < nightsMin || c.nights > nightsMax)) return false;
+    if (staterooms.length && !staterooms.includes(c.stateroom_type)) return false;
+    if (guests.length && !guests.includes(c.guests)) return false;
+    if (bonusOnly && !c.next_cruise_bonus) return false;
+    if (ports.length && !ports.includes(portFull(c))) return false;
+    if (ships.length && !ships.includes(c.ship)) return false;
+    if (search) {
+      const haystack = [c.ship, c.itinerary, portFull(c), c.offer_code]
+        .join(' ').toLowerCase();
+      if (!haystack.includes(search)) return false;
+    }
+    return true;
+  });
+
+  renderTable();
+}
+
+// ── Sorting ────────────────────────────────────────────────────────────────
+function setSort(asc, desc) {
+  if (currentSort === asc) currentSort = desc;
+  else currentSort = asc;
+  document.getElementById('sort-select').value = currentSort;
+  renderTable();
+}
+
+function sortCruises(list) {
+  const s = currentSort;
+  return [...list].sort((a, b) => {
+    if (s === 'sail_date')     return (a.sail_date||'').localeCompare(b.sail_date||'');
+    if (s === 'sail_date_desc') return (b.sail_date||'').localeCompare(a.sail_date||'');
+    if (s === 'points_asc')    return (a.points_required||0) - (b.points_required||0);
+    if (s === 'points_desc')   return (b.points_required||0) - (a.points_required||0);
+    if (s === 'nights_asc')    return (a.nights||0) - (b.nights||0);
+    if (s === 'nights_desc')   return (b.nights||0) - (a.nights||0);
+    if (s === 'ship')          return (a.ship||'').localeCompare(b.ship||'');
+    return 0;
+  });
+}
+
+// ── Render Table ───────────────────────────────────────────────────────────
+function renderTable() {
+  const sorted = sortCruises(filteredCruises);
+  const tbody = document.getElementById('cruise-tbody');
+  const empty = document.getElementById('empty-msg');
+  const table = document.getElementById('cruise-table');
+
+  // Update result count
+  document.getElementById('result-count').innerHTML =
+    `<strong>${sorted.length.toLocaleString()}</strong> of ${allCruises.length.toLocaleString()} offers`;
+
+  // Update sort header indicators
+  document.querySelectorAll('thead th').forEach(th => {
+    th.classList.remove('sorted-asc','sorted-desc');
+  });
+  const sortMap = {
+    sail_date: 'th-date', sail_date_desc: 'th-date',
+    points_asc: 'th-points', points_desc: 'th-points',
+    nights_asc: 'th-nights', nights_desc: 'th-nights',
+    ship: 'th-ship',
+  };
+  const thId = sortMap[currentSort];
+  if (thId) {
+    const el = document.getElementById(thId);
+    el.classList.add(currentSort.endsWith('_desc') ? 'sorted-desc' : 'sorted-asc');
+  }
+
+  if (sorted.length === 0) {
+    table.style.display = 'none';
+    empty.style.display = 'flex';
+    return;
+  }
+  table.style.display = '';
+  empty.style.display = 'none';
+
+  // Render rows (virtual if huge — cap at 1000 for performance)
+  const MAX = 1500;
+  const rows = sorted.slice(0, MAX);
+  tbody.innerHTML = rows.map(c => {
+    const pts = (c.points_required||0).toLocaleString();
+    const dateStr = c.sail_date
+      ? new Date(c.sail_date + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+      : '—';
+    const stClass = stateroomChipClass(c.stateroom_type);
+    const gClass = c.guests === 2 ? 'chip-2guest' : 'chip-1guest';
+    const bonus = c.next_cruise_bonus
+      ? `<span class="bonus-tag">${escHtml(c.next_cruise_bonus)}</span>`
+      : '<span style="color:var(--muted)">—</span>';
+    return `<tr>
+      <td><span class="points-pill">♠ ${pts}</span></td>
+      <td>${dateStr}</td>
+      <td style="text-align:center">${c.nights ?? '—'}</td>
+      <td>${escHtml(c.ship||'—')}</td>
+      <td>${escHtml(portFull(c)||'—')}</td>
+      <td class="wrap">${escHtml(c.itinerary||'—')}</td>
+      <td><span class="chip ${stClass}">${escHtml(c.stateroom_type||'—')}</span></td>
+      <td><span class="chip ${gClass}">${c.guests ? c.guests + (c.guests===1?' Guest':' Guests') : '—'}</span></td>
+      <td>${bonus}</td>
+      <td><button class="code-btn" onclick="copyCode(this,'${escHtml(c.offer_code)}')">${escHtml(c.offer_code||'—')}</button></td>
+    </tr>`;
+  }).join('');
+
+  if (sorted.length > MAX) {
+    tbody.innerHTML += `<tr><td colspan="10" style="text-align:center;padding:14px;color:var(--muted);font-style:italic">
+      Showing first ${MAX.toLocaleString()} of ${sorted.length.toLocaleString()} results. Narrow your filters to see more.
+    </td></tr>`;
+  }
+}
+
+function stateroomChipClass(type) {
+  if (!type) return 'chip-default';
+  const t = type.toLowerCase();
+  if (t === 'interior') return 'chip-interior';
+  if (t === 'oceanview') return 'chip-oceanview';
+  if (t === 'balcony') return 'chip-balcony';
+  if (t.includes('suite')) return 'chip-suite';
+  return 'chip-default';
+}
+
+// ── Copy Offer Code ────────────────────────────────────────────────────────
+function copyCode(btn, code) {
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = code;
+      btn.classList.remove('copied');
+    }, 1800);
+  });
+}
+
+// ── Port Full Name ─────────────────────────────────────────────────────────
+function portFull(c) {
+  return c.departure_state ? `${c.departure_port}, ${c.departure_state}` : (c.departure_port || '');
+}
+
+// ── Format YYMM → "Month YYYY" ─────────────────────────────────────────────
+function formatYYMM(yymm) {
+  const year = '20' + yymm.slice(0, 2);
+  const month = parseInt(yymm.slice(2)) - 1;
+  return new Date(year, month, 1).toLocaleDateString('en-US', {month: 'long', year: 'numeric'});
+}
+
+// ── Reset ──────────────────────────────────────────────────────────────────
+function resetFilters() {
+  document.getElementById('f-search').value = '';
+  document.getElementById('f-sailing-month').value = '';
+  document.getElementById('f-points-min').value = '';
+  document.getElementById('f-points-max').value = '';
+  document.getElementById('f-date-from').value = '';
+  document.getElementById('f-date-to').value = '';
+  document.getElementById('f-nights-min').value = '';
+  document.getElementById('f-nights-max').value = '';
+  document.getElementById('f-bonus-only').checked = false;
+  document.querySelectorAll('#f-port input, #f-ship input, #f-stateroom input, #f-guests input')
+    .forEach(cb => cb.checked = true);
+  applyFilters();
+}
+
+// ── Utility ────────────────────────────────────────────────────────────────
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+// ── Event Listeners ────────────────────────────────────────────────────────
+function attachListeners() {
+  const debounce = (fn, ms=300) => {
+    let t; return (...args) => { clearTimeout(t); t = setTimeout(()=>fn(...args), ms); };
+  };
+  document.getElementById('f-search').addEventListener('input', debounce(applyFilters));
+  document.getElementById('f-sailing-month').addEventListener('change', applyFilters);
+  ['f-points-min','f-points-max','f-date-from','f-date-to','f-nights-min','f-nights-max'].forEach(id => {
+    document.getElementById(id).addEventListener('change', applyFilters);
+  });
+  document.getElementById('f-port').addEventListener('change', applyFilters);
+  document.getElementById('f-ship').addEventListener('change', applyFilters);
+  document.getElementById('f-bonus-only').addEventListener('change', applyFilters);
+  document.getElementById('sort-select').addEventListener('change', e => {
+    currentSort = e.target.value;
+    renderTable();
+  });
+  // Dynamic checkboxes (stateroom added after load)
+  document.getElementById('f-stateroom').addEventListener('change', applyFilters);
+  document.getElementById('f-guests').addEventListener('change', applyFilters);
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+attachListeners();
+loadData();
+</script>
+</body>
+</html>
