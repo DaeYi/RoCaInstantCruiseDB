@@ -204,11 +204,22 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 20px;
+      padding: 8px 20px;
       background: var(--white);
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
       gap: 12px;
+    }
+
+    /* ── Toolbar Ad Slot ─────────────────────────────────────────────── */
+    .toolbar-ad {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 728px;
+      min-height: 50px;
+      overflow: hidden;
     }
     .result-count {
       font-size: 13px;
@@ -467,6 +478,10 @@
   <main>
     <div class="toolbar">
       <div class="result-count" id="result-count">Loading…</div>
+      <!-- ── Ad Slot ───────────────────────────────────────────────── -->
+      <div class="toolbar-ad">
+        <!-- Place ad network code here -->
+      </div>
       <div class="sort-wrap">
         <label for="sort-select">Sort by:</label>
         <select id="sort-select" onchange="renderTable()">
