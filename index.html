@@ -97,6 +97,7 @@
       text-align: center;
     }
     footer a { color: var(--muted); text-decoration: underline; }
+    .footer-short { display: none; }
 
     /* ── Sidebar Filters ─────────────────────────────────────────── */
     aside {
@@ -469,7 +470,12 @@
       .btn-filter-toggle { display: flex; }
 
       /* Layout */
-      .app { height: calc(100vh - 52px - 36px); }
+      .app { height: calc(100vh - 52px - 48px); }
+
+      /* Footer: auto-height with short disclaimer on mobile */
+      footer { height: auto; padding: 8px 16px; min-height: 36px; }
+      .footer-full { display: none; }
+      .footer-short { display: inline; }
 
       /* Sidebar becomes a drawer */
       aside {
@@ -672,7 +678,8 @@
 </div>
 
 <footer>
-  Casino Cruise Deck is an independent, community-built tool and is not affiliated with, endorsed by, or sponsored by Royal Caribbean International, Royal Caribbean Group, or any of their subsidiaries or related companies. All cruise offer data is sourced from publicly available materials. Royal Caribbean® and related marks are trademarks of Royal Caribbean Cruises Ltd.
+  <span class="footer-full">Casino Cruise Deck is an independent, community-built tool and is not affiliated with, endorsed by, or sponsored by Royal Caribbean International, Royal Caribbean Group, or any of their subsidiaries or related companies. All cruise offer data is sourced from publicly available materials. Royal Caribbean® and related marks are trademarks of Royal Caribbean Cruises Ltd.</span>
+  <span class="footer-short">Independent community tool. Not affiliated with or endorsed by Royal Caribbean International. Royal Caribbean® is a trademark of Royal Caribbean Cruises Ltd.</span>
 </footer>
 
 <script>
