@@ -377,6 +377,127 @@
       font-size: 16px;
       color: var(--muted);
     }
+
+    /* ── Sidebar Close Button (mobile only) ─────────────────────── */
+    .sidebar-close-row { display: none; justify-content: flex-end; margin-bottom: 4px; }
+    .sidebar-close-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 13px;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 4px 10px;
+    }
+    @media (max-width: 767px) {
+      .sidebar-close-row { display: flex; }
+    }
+
+    /* ── Mobile Filter Toggle Button ─────────────────────────────── */
+    .btn-filter-toggle {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: var(--radius);
+      padding: 7px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* ── Mobile Card Layout ──────────────────────────────────────── */
+    .card-list { display: none; flex-direction: column; gap: 10px; padding: 10px; overflow-y: auto; flex: 1; }
+    .cruise-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+    }
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .card-ship { font-weight: 700; font-size: 15px; color: var(--text); }
+    .card-itinerary { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+    .card-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--muted);
+    }
+    .card-meta-item strong { color: var(--text); }
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .card-chips { display: flex; gap: 5px; flex-wrap: wrap; }
+
+    /* ── Sidebar Overlay (mobile) ────────────────────────────────── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 200;
+    }
+    .sidebar-overlay.open { display: block; }
+
+    /* ── Mobile Responsive ───────────────────────────────────────── */
+    @media (max-width: 767px) {
+      /* Header */
+      header { padding: 0 12px; height: 52px; }
+      .header-subtitle { display: none; }
+      .header-meta { display: none; }
+      .btn-filter-toggle { display: flex; }
+
+      /* Layout */
+      .app { height: calc(100vh - 52px - 36px); }
+
+      /* Sidebar becomes a drawer */
+      aside {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: min(320px, 85vw);
+        z-index: 300;
+        transform: translateX(-105%);
+        transition: transform .25s ease;
+        overflow-y: auto;
+        padding-top: 16px;
+        box-shadow: 4px 0 20px rgba(0,0,0,.2);
+      }
+      aside.open { transform: translateX(0); }
+
+      /* Toolbar */
+      .toolbar { flex-wrap: wrap; padding: 6px 10px; gap: 6px; }
+      .toolbar-ad { display: none; }
+      .result-count { font-size: 12px; }
+      .sort-wrap { font-size: 12px; }
+      .sort-wrap select { font-size: 12px; }
+
+      /* Hide table, show cards */
+      .table-wrap { display: none; }
+      .card-list { display: flex; }
+    }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8428024924081477"
      crossorigin="anonymous"></script>
@@ -393,12 +514,20 @@
     <div>Royal Caribbean Casino Offers</div>
     <div>Updated: <span id="last-updated">—</span></div>
   </div>
+  <button class="btn-filter-toggle" onclick="openSidebar()">&#9776; Filters</button>
 </header>
+
+<!-- Mobile sidebar overlay -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
 <div class="app">
 
   <!-- ── Sidebar ──────────────────────────────────────────────────── -->
-  <aside>
+  <aside id="sidebar">
+    <!-- Mobile close button -->
+    <div class="sidebar-close-row">
+      <button onclick="closeSidebar()" class="sidebar-close-btn" aria-label="Close filters">&#x2715; Close</button>
+    </div>
 
     <!-- Search -->
     <div class="filter-section">
@@ -533,6 +662,11 @@
         <div style="font-size:12px;color:var(--muted)">Try adjusting your search criteria.</div>
       </div>
     </div>
+
+    <!-- Mobile card list -->
+    <div class="card-list" id="card-list">
+      <div id="card-loading" style="text-align:center;padding:40px;color:var(--muted);font-size:15px;">Loading cruise offers…</div>
+    </div>
   </main>
 
 </div>
@@ -593,6 +727,8 @@ async function loadData() {
 
     document.getElementById('loading').style.display = 'none';
     document.getElementById('cruise-table').style.display = '';
+    const cl = document.getElementById('card-loading');
+    if (cl) cl.remove();
   } catch (e) {
     document.getElementById('loading').textContent = 'Error loading data. Make sure index.json exists.';
     console.error(e);
@@ -731,6 +867,11 @@ function renderTable() {
     el.classList.add(currentSort.endsWith('_desc') ? 'sorted-desc' : 'sorted-asc');
   }
 
+  if (isMobile()) {
+    renderCards(sorted);
+    return;
+  }
+
   if (sorted.length === 0) {
     table.style.display = 'none';
     empty.style.display = 'flex';
@@ -850,6 +991,74 @@ function attachListeners() {
   // Dynamic checkboxes (stateroom added after load)
   document.getElementById('f-stateroom').addEventListener('change', applyFilters);
   document.getElementById('f-guests').addEventListener('change', applyFilters);
+}
+
+// ── Mobile Sidebar ─────────────────────────────────────────────────────────
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ── Mobile Card Renderer ───────────────────────────────────────────────────
+function isMobile() {
+  return window.matchMedia('(max-width: 767px)').matches;
+}
+
+function renderCards(sorted) {
+  const cardList = document.getElementById('card-list');
+  const cardLoading = document.getElementById('card-loading');
+  if (cardLoading) cardLoading.remove();
+
+  if (sorted.length === 0) {
+    cardList.innerHTML = `<div class="empty"><div class="icon">🔍</div><div>No cruises match your filters.</div><div style="font-size:12px;color:var(--muted)">Try adjusting your search criteria.</div></div>`;
+    return;
+  }
+
+  const MAX = 1500;
+  const rows = sorted.slice(0, MAX);
+  cardList.innerHTML = rows.map(c => {
+    const pts = (c.points_required||0).toLocaleString();
+    const dateStr = c.sail_date
+      ? new Date(c.sail_date + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+      : '—';
+    const stClass = stateroomChipClass(c.stateroom_type);
+    const gClass = c.guests === 2 ? 'chip-2guest' : 'chip-1guest';
+    const gLabel = c.guests ? c.guests + (c.guests===1?' Guest':' Guests') : '—';
+    const bonusHtml = c.next_cruise_bonus
+      ? `<span class="bonus-tag">${escHtml(c.next_cruise_bonus)}</span>`
+      : '';
+    const port = portFull(c) || '—';
+    return `<div class="cruise-card">
+      <div class="card-top">
+        <div>
+          <div class="card-ship">${escHtml(c.ship||'—')}</div>
+          <div class="card-itinerary">${escHtml(c.itinerary||'—')}</div>
+        </div>
+        <span class="points-pill">&#9824; ${pts}</span>
+      </div>
+      <div class="card-meta">
+        <div class="card-meta-item">&#128197; <strong>${dateStr}</strong></div>
+        <div class="card-meta-item">&#128344; <strong>${c.nights ?? '—'} nights</strong></div>
+        <div class="card-meta-item">&#128641; ${escHtml(port)}</div>
+      </div>
+      <div class="card-bottom">
+        <div class="card-chips">
+          <span class="chip ${stClass}">${escHtml(c.stateroom_type||'—')}</span>
+          <span class="chip ${gClass}">${gLabel}</span>
+          ${bonusHtml}
+        </div>
+        <button class="code-btn" onclick="copyCode(this,'${escHtml(c.offer_code)}')">${escHtml(c.offer_code||'—')}</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  if (sorted.length > MAX) {
+    cardList.innerHTML += `<div style="text-align:center;padding:14px;color:var(--muted);font-style:italic;font-size:12px;">Showing first ${MAX.toLocaleString()} of ${sorted.length.toLocaleString()} results. Narrow your filters to see more.</div>`;
+  }
 }
 
 // ── Init ───────────────────────────────────────────────────────────────────
