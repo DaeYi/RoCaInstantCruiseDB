@@ -1,0 +1,727 @@
+{
+  "class_order": ["icon", "oasis", "quantum", "freedom", "voyager", "radiance", "vision"],
+  "classes": {
+    "icon": {
+      "name": "Icon Class",
+      "tonnage_range": "~248,663 GT",
+      "passengers_range": "5,610–7,600",
+      "first_built": 2024,
+      "summary": "Royal's newest and largest. Eight neighborhoods including the family-focused Surfside, the AquaDome with a 55-ft waterfall, and Category 6 — the largest waterpark at sea.",
+      "amenities": {
+        "family": [
+          "Surfside neighborhood (entire family-only zone)",
+          "Splashaway Bay & Adventure Pool",
+          "Adventure Ocean kids program",
+          "Royal Babies & Tots nursery",
+          "Social388 teen lounge",
+          "Ultimate Family Townhouse (3-story suite)"
+        ],
+        "thrill": [
+          "Category 6 waterpark — 6 record-breaking slides incl. Frightening Bolt (tallest at sea) and Pressure Drop (first open free-fall)",
+          "Crown's Edge — skywalk + ropes course + thrill ride",
+          "FlowRider surf simulator",
+          "Adrenaline Peak rock climbing",
+          "Absolute Zero ice arena"
+        ],
+        "dining": [
+          "Empire Supper Club (8-course w/ jazz, $200/pp)",
+          "Celebration Table (private 12-person)",
+          "Chops Grille",
+          "Izumi in the Park",
+          "Hooked Seafood",
+          "Giovanni's Italian Kitchen",
+          "Pier 7 boardwalk seafood",
+          "AquaDome Market (6 food stalls)",
+          "Pearl Cafe (24-hour, complimentary)"
+        ],
+        "entertainment": [
+          "AquaDome — glass-domed venue w/ 55-ft waterfall and aqua show",
+          "Royal Theater (Broadway productions)",
+          "The Pearl — kinetic architectural sculpture in Royal Promenade",
+          "Music Hall",
+          "Schooner Bar",
+          "Casino Royale"
+        ],
+        "pools": [
+          "Royal Bay — largest pool at sea (40,000+ gallons)",
+          "Cloud 17 (adults-only, Deck 17)",
+          "Hideaway infinity pool",
+          "Swim & Tonic — first swim-up bar at sea",
+          "Chill Island multi-pool deck",
+          "7 pools + 9 whirlpools total"
+        ],
+        "neighborhoods": [
+          "Royal Promenade",
+          "Central Park",
+          "Surfside (family)",
+          "Hideaway",
+          "Chill Island",
+          "Thrill Island",
+          "AquaDome",
+          "Suite Neighborhood"
+        ]
+      }
+    },
+    "oasis": {
+      "name": "Oasis Class",
+      "tonnage_range": "226,600–236,500 GT",
+      "passengers_range": "5,400–6,988",
+      "first_built": 2009,
+      "summary": "The mega-ship template Royal invented in 2009. Seven neighborhoods, an open-air Central Park, the Boardwalk with carousel and AquaTheater, and the 10-story Ultimate Abyss dry slide.",
+      "amenities": {
+        "family": [
+          "Splashaway Bay (post-amplification)",
+          "Adventure Ocean kids program",
+          "Royal Babies & Tots nursery",
+          "Boardwalk Carousel",
+          "Social298 teen lounge"
+        ],
+        "thrill": [
+          "Two FlowRider surf simulators",
+          "Ultimate Abyss — 10-story dry slide",
+          "Zip line across the Boardwalk (10 decks high)",
+          "Two rock climbing walls",
+          "Perfect Storm waterslides",
+          "Studio B ice rink",
+          "Mini-golf"
+        ],
+        "dining": [
+          "150 Central Park (signature high-end)",
+          "Chops Grille",
+          "Giovanni's Italian Kitchen",
+          "Izumi",
+          "Chef's Table"
+        ],
+        "entertainment": [
+          "AquaTheater — outdoor stern venue with diving shows",
+          "Royal Theater (Broadway-style productions)",
+          "Studio B ice rink shows",
+          "Boleros Latin lounge",
+          "On Air comedy/karaoke",
+          "Schooner Bar",
+          "Casino Royale"
+        ],
+        "pools": [
+          "Main pool",
+          "Beach pool",
+          "Sports pool",
+          "Solarium (adults-only, multi-level on newer ships)",
+          "Splashaway Bay / H2O Zone"
+        ],
+        "neighborhoods": [
+          "Royal Promenade",
+          "Central Park (open-air, 12,000+ live plants)",
+          "Boardwalk (carousel + AquaTheater)",
+          "Pool & Sports Zone",
+          "Vitality Spa & Fitness",
+          "Entertainment Place",
+          "Youth Zone"
+        ]
+      }
+    },
+    "quantum": {
+      "name": "Quantum Class",
+      "tonnage_range": "~167,700–169,400 GT",
+      "passengers_range": "4,180–4,246",
+      "first_built": 2014,
+      "summary": "Tech-forward 2014+ ships with the North Star observation pod, the RipCord by iFly skydiving simulator, and SeaPlex — the largest indoor activity space at sea (bumper cars, roller skating, trapeze). Spectrum and Odyssey are the upgraded \"Quantum Ultra\" sub-class.",
+      "amenities": {
+        "family": [
+          "Splashaway Bay",
+          "H2O Zone — first wave pool at sea",
+          "Adventure Ocean kids program",
+          "Royal Babies & Tots nursery",
+          "SeaPlex kids/teens activities"
+        ],
+        "thrill": [
+          "North Star — Guinness Record glass observation pod (~300 ft up)",
+          "RipCord by iFly — skydiving simulator",
+          "SeaPlex — bumper cars, roller skating, basketball, trapeze school",
+          "FlowRider surf simulator",
+          "Rock climbing wall"
+        ],
+        "dining": [
+          "Wonderland (whimsical signature)",
+          "Chops Grille",
+          "Jamie's Italian",
+          "Izumi",
+          "Chef's Table",
+          "Four MDR concepts: Chic, Silk, American Icon, Grande (base Quantum only)"
+        ],
+        "entertainment": [
+          "Two70° — 270° lounge w/ robotic Roboscreens (\"Spectra's Cabaret\")",
+          "Music Hall — rock-tribute live venue",
+          "Royal Theater",
+          "SeaPlex (events)",
+          "Schooner Bar",
+          "Casino Royale"
+        ],
+        "pools": [
+          "Indoor pool with retractable glass roof",
+          "Outdoor pool with movie screen",
+          "Solarium (adults-only)",
+          "H2O Zone kids' wave pool"
+        ],
+        "neighborhoods": []
+      }
+    },
+    "freedom": {
+      "name": "Freedom Class",
+      "tonnage_range": "~154,400 GT",
+      "passengers_range": "3,634–4,375",
+      "first_built": 2006,
+      "summary": "The class that debuted FlowRider at sea in 2006. Voyager-style Royal Promenade plus a bigger pool deck, H2O Zone (now Splashaway Bay on amplified hulls), and Studio B ice rink.",
+      "amenities": {
+        "family": [
+          "Splashaway Bay (post-amplification)",
+          "Adventure Ocean kids program",
+          "Royal Babies & Tots nursery"
+        ],
+        "thrill": [
+          "FlowRider — debuted at sea on this class (2006)",
+          "Rock climbing wall",
+          "Studio B ice rink",
+          "Mini-golf"
+        ],
+        "dining": [
+          "Chops Grille",
+          "Chef's Table",
+          "Johnny Rockets",
+          "Giovanni's Table"
+        ],
+        "entertainment": [
+          "Royal Theater",
+          "Studio B ice shows",
+          "Royal Promenade",
+          "Schooner Bar",
+          "On Air comedy",
+          "Boleros Latin lounge",
+          "Casino Royale"
+        ],
+        "pools": [
+          "Main pool",
+          "Caribbean resort pool (post-amplification) / H2O Zone (older config)",
+          "Solarium with cantilevered whirlpools"
+        ],
+        "neighborhoods": [
+          "Royal Promenade"
+        ]
+      }
+    },
+    "voyager": {
+      "name": "Voyager Class",
+      "tonnage_range": "~137,000–139,800 GT",
+      "passengers_range": "~3,114",
+      "first_built": 1999,
+      "summary": "Royal's revolutionary 1999 class — first to bring the Royal Promenade and an ice rink to sea. All five hulls have FlowRider (Adventure pre-amplification, others retrofitted 2014–19).",
+      "amenities": {
+        "family": [
+          "Adventure Ocean kids program",
+          "H2O kids' splash area"
+        ],
+        "thrill": [
+          "FlowRider surf simulator",
+          "Rock climbing wall",
+          "Studio B — first ice rink at sea",
+          "Mini-golf",
+          "Sports court"
+        ],
+        "dining": [
+          "Chops Grille",
+          "Giovanni's Table",
+          "Izumi",
+          "Chef's Table"
+        ],
+        "entertainment": [
+          "Royal Promenade — first at sea",
+          "Royal Theater",
+          "Studio B ice rink",
+          "Schooner Bar",
+          "On Air comedy/karaoke",
+          "Casino Royale"
+        ],
+        "pools": [
+          "Main pool",
+          "H2O Zone kids area",
+          "Solarium adults pool",
+          "Cantilevered whirlpools"
+        ],
+        "neighborhoods": [
+          "Royal Promenade"
+        ]
+      }
+    },
+    "radiance": {
+      "name": "Radiance Class",
+      "tonnage_range": "~90,090 GT",
+      "passengers_range": "2,466–2,543",
+      "first_built": 2001,
+      "summary": "Mid-size, glass-walled ships built 2001–2004. Designed for port-intensive itineraries (Alaska, Mediterranean, Asia). No FlowRider, no big waterparks, but lots of natural light and a covered Solarium with retractable glass roof.",
+      "amenities": {
+        "family": [
+          "Adventure Ocean kids program",
+          "Small kids' water slide on Deck 12"
+        ],
+        "thrill": [
+          "Rock climbing wall",
+          "Mini-golf",
+          "Self-leveling pool tables (a Radiance signature)"
+        ],
+        "dining": [
+          "Chops Grille",
+          "Izumi",
+          "Giovanni's Table",
+          "Chef's Table",
+          "Cafe Latte-tudes"
+        ],
+        "entertainment": [
+          "Royal Theater",
+          "Viking Crown Lounge — signature glass-enclosed top-deck venue",
+          "Schooner Bar",
+          "Centrum aerial shows",
+          "Outdoor movie screen",
+          "Casino Royale"
+        ],
+        "pools": [
+          "Main outdoor pool",
+          "Solarium adults-only pool with retractable glass roof",
+          "Three whirlpools"
+        ],
+        "neighborhoods": []
+      }
+    },
+    "vision": {
+      "name": "Vision Class",
+      "tonnage_range": "73,800–82,900 GT",
+      "passengers_range": "2,416–2,730",
+      "first_built": 1996,
+      "summary": "The oldest and smallest ships in the active fleet, built 1996–1998. No FlowRider, no ice rink, no zip line — but they reach smaller ports the mega-ships can't, and are often the most affordable points-wise.",
+      "amenities": {
+        "family": [
+          "Adventure Ocean kids program",
+          "Small kids' splash zone"
+        ],
+        "thrill": [
+          "Rock climbing wall"
+        ],
+        "dining": [
+          "Chops Grille",
+          "Chef's Table"
+        ],
+        "entertainment": [
+          "Royal Theater",
+          "Schooner Bar",
+          "Centrum atrium aerial shows",
+          "Viking Crown Lounge",
+          "R Bar",
+          "Casino Royale"
+        ],
+        "pools": [
+          "Main pool",
+          "Adults-only Solarium with pool & whirlpools"
+        ],
+        "neighborhoods": []
+      }
+    }
+  },
+  "ships": {
+    "Icon Of The Seas": {
+      "class": "icon",
+      "year_built": 2024,
+      "extras": ["Original \"Aqua Action\" AquaDome show with robotic arms"],
+      "missing": ["Royal Railway dining (on Star/Legend)", "Mason Jar (on Star)"],
+      "notes": "Lead Icon-class ship; first cruise ship powered by LNG at this scale."
+    },
+    "Star Of The Seas": {
+      "class": "icon",
+      "year_built": 2025,
+      "extras": [
+        "Enhanced Surfside with extra splash pools",
+        "New aqua show with upgraded tech and storyline",
+        "AquaDome Market additions: La Cocinita, Pig Out BBQ, Mai Thai",
+        "Royal Railway immersive dining",
+        "Mason Jar Southern Restaurant"
+      ],
+      "missing": [],
+      "notes": "Year-round from Port Canaveral."
+    },
+    "Legend Of The Seas": {
+      "class": "icon",
+      "year_built": 2026,
+      "extras": [
+        "28 ways to dine (record for class)",
+        "Hollywood-inspired supper club",
+        "Royal Railway immersive dining"
+      ],
+      "missing": [],
+      "notes": "Debuts July 2026 — Western Mediterranean from Barcelona, then Fort Lauderdale year-round from November 2026. Note: this is a brand-new Icon-class ship, not the original Vision-class Legend (sold in 2017)."
+    },
+    "Oasis Of The Seas": {
+      "class": "oasis",
+      "year_built": 2009,
+      "last_amplified": 2019,
+      "extras": [
+        "Ultimate Abyss (added 2019)",
+        "Bionic Bar",
+        "Music Hall",
+        "Spotlight Karaoke",
+        "Portside BBQ",
+        "Laser tag"
+      ],
+      "missing": ["Wonderland", "Mason Jar", "Hooked Seafood", "Suite Neighborhood"],
+      "notes": "First Oasis-class ship — revolutionary at launch, oldest in class."
+    },
+    "Allure Of The Seas": {
+      "class": "oasis",
+      "year_built": 2010,
+      "last_amplified": 2025,
+      "extras": [
+        "Ultimate Abyss (added 2025)",
+        "Caribbean resort pool",
+        "Pesky Parrot tiki bar",
+        "Mason Jar Southern Restaurant",
+        "Royal Escape Room",
+        "Laser tag",
+        "100+ new cabins"
+      ],
+      "missing": ["Bionic Bar", "Suite Neighborhood"],
+      "notes": "Most recent amplification of any Oasis-class hull — second-oldest ship but freshest amenities."
+    },
+    "Harmony Of The Seas": {
+      "class": "oasis",
+      "year_built": 2016,
+      "last_amplified": 2018,
+      "amplification_in_progress": {
+        "start": "2026-04-01",
+        "end": "2026-05-21",
+        "adds": [
+          "Largest casino in the class",
+          "Pesky Parrot tiki bar",
+          "Caribbean resort pool",
+          "Samba Grill",
+          "Ultimate Panoramic Suites",
+          "Ultimate Family Suite"
+        ]
+      },
+      "extras": [
+        "Ultimate Abyss (debut ship)",
+        "Bionic Bar",
+        "Wonderland",
+        "Virtual balconies"
+      ],
+      "missing": ["Mason Jar", "Suite Neighborhood", "Hooked Seafood", "Playmakers"],
+      "notes": "First ship with Ultimate Abyss."
+    },
+    "Symphony Of The Seas": {
+      "class": "oasis",
+      "year_built": 2018,
+      "extras": [
+        "Suite Neighborhood (debut)",
+        "Hooked Seafood (debut)",
+        "Playmakers Sports Bar (debut)",
+        "El Loco Fresh",
+        "Laser tag arena",
+        "Sugar Beach",
+        "Virtual balconies",
+        "Bionic Bar"
+      ],
+      "missing": ["Mason Jar"],
+      "notes": "Held world's-largest title 2018–2022. Considered the \"balanced\" Oasis ship."
+    },
+    "Wonder Of The Seas": {
+      "class": "oasis",
+      "year_built": 2022,
+      "extras": [
+        "Mason Jar Southern Restaurant (debut)",
+        "Ultimate Family Suite (8-passenger 2-bedroom loft with in-cabin slide, LEGO wall, air hockey)",
+        "Expanded Suite Neighborhood with private suite sun deck and plunge pool",
+        "Wonder Playscape kids climbing structure",
+        "Coastal Kitchen",
+        "The Vue bar"
+      ],
+      "missing": [],
+      "notes": "Last Oasis hull built before LNG conversion."
+    },
+    "Utopia Of The Seas": {
+      "class": "oasis",
+      "year_built": 2024,
+      "extras": [
+        "First LNG-powered Oasis ship",
+        "Royal Railway – Utopia Station (immersive train-themed dining)",
+        "Pesky Parrot bar",
+        "The Spare Tire food truck",
+        "Sprinkles ice cream upgrade",
+        "Expanded casino",
+        "Revamped pool deck",
+        "Ultimate Abyss with zoom rollers and racing windows"
+      ],
+      "missing": ["Bionic Bar"],
+      "notes": "First Oasis ship designed for short 3- and 4-night cruises to CocoCay year-round from Port Canaveral."
+    },
+    "Quantum Of The Seas": {
+      "class": "quantum",
+      "year_built": 2014,
+      "last_amplified": 2020,
+      "extras": [],
+      "missing": ["Teppanyaki", "Unified MDR (still has 4 separate MDR concepts)"],
+      "notes": "Lead ship; based in Asia (Singapore/Shanghai)."
+    },
+    "Anthem Of The Seas": {
+      "class": "quantum",
+      "year_built": 2015,
+      "last_amplified": 2018,
+      "extras": [
+        "First escape room at sea (\"Escape from the Future\")",
+        "Gigi the giraffe sculpture on SeaPlex"
+      ],
+      "missing": [],
+      "notes": "Operates from Cape Liberty (NJ) to Caribbean/Bermuda."
+    },
+    "Ovation Of The Seas": {
+      "class": "quantum",
+      "year_built": 2016,
+      "last_amplified": 2026,
+      "extras": [
+        "32-foot panda mama-and-cub sculpture",
+        "First wave pool at sea",
+        "Expanded casino (May 2026 amp)",
+        "Sound Cellar (May 2026 amp)",
+        "Starbucks (May 2026 amp)",
+        "Pesky Parrot (May 2026 amp)",
+        "Izumi Hibachi (May 2026 amp)",
+        "Giovanni's Italian (May 2026 amp)",
+        "Ultimate Family Suite (May 2026 amp)"
+      ],
+      "missing": [],
+      "notes": "Just emerged from a major amplification on May 1, 2026."
+    },
+    "Spectrum Of The Seas": {
+      "class": "quantum",
+      "year_built": 2019,
+      "extras": [
+        "SkyPad VR trampoline (Quantum Ultra signature)",
+        "Teppanyaki",
+        "Sichuan Red (Asian-market specialty)",
+        "Hot Pot",
+        "Leonidas",
+        "Expanded Golden + Silver Suite Class areas",
+        "Larger casino",
+        "Unified main dining room"
+      ],
+      "missing": ["Music Hall", "Some Western specialty restaurants"],
+      "notes": "First Quantum Ultra ship — designed for the Asian market, based in Shanghai."
+    },
+    "Odyssey Of The Seas": {
+      "class": "quantum",
+      "year_built": 2021,
+      "extras": [
+        "Two outdoor pools (instead of one indoor + one outdoor)",
+        "Larger Solarium",
+        "Teppanyaki",
+        "Giovanni's Italian Kitchen",
+        "Playmakers Sports Bar",
+        "Hooked Seafood",
+        "Expanded suite class areas"
+      ],
+      "missing": ["Indoor pool", "SkyPad (planned but never installed)"],
+      "notes": "Western-market Quantum Ultra. Sails Cape Liberty, Florida, and Mediterranean."
+    },
+    "Freedom Of The Seas": {
+      "class": "freedom",
+      "year_built": 2006,
+      "last_amplified": 2020,
+      "extras": [
+        "Perfect Storm waterslides",
+        "Caribbean resort pool",
+        "Splashaway Bay",
+        "Giovanni's Italian Kitchen",
+        "Laser tag",
+        "Social033 teen space",
+        "Playmakers"
+      ],
+      "missing": ["Sabor", "Fish & Ships"],
+      "notes": "First-ever ship with FlowRider (2006). Redeploying to UK in 2027."
+    },
+    "Liberty Of The Seas": {
+      "class": "freedom",
+      "year_built": 2007,
+      "last_amplified": 2016,
+      "amplification_in_progress": {
+        "start": "2026-04-19",
+        "end": "2026-05-29",
+        "adds": [
+          "Splashaway Bay",
+          "Izumi Hibachi",
+          "Starbucks",
+          "Royal Escape Room",
+          "Caribbean resort pool",
+          "Expanded casino"
+        ]
+      },
+      "extras": [
+        "Sabor Mexican",
+        "Perfect Storm — most extensive of the three (multiple slides)"
+      ],
+      "missing": ["Splashaway Bay (until May 29, 2026)", "Izumi Hibachi (until May 29, 2026)", "Playmakers"],
+      "notes": "Currently in the middle of a major amplification (Apr 19 – May 29, 2026)."
+    },
+    "Independence Of The Seas": {
+      "class": "freedom",
+      "year_built": 2008,
+      "last_amplified": 2018,
+      "extras": [
+        "SkyPad",
+        "Perfect Storm slides",
+        "Splashaway Bay",
+        "Playmakers",
+        "Izumi Hibachi",
+        "Fish & Ships",
+        "Sugar Beach",
+        "Laser tag",
+        "Royal Escape Room",
+        "Panoramic cabins"
+      ],
+      "missing": [],
+      "notes": "Most amplified Freedom hull until Liberty's 2026 refit."
+    },
+    "Voyager Of The Seas": {
+      "class": "voyager",
+      "year_built": 1999,
+      "last_amplified": 2019,
+      "extras": [
+        "Perfect Storm three-story slides",
+        "Laser tag",
+        "Redesigned Adventure Ocean"
+      ],
+      "missing": ["Playmakers", "Hooked Seafood", "Splashaway Bay"],
+      "notes": "First Voyager-class hull. FlowRider added 2014."
+    },
+    "Explorer Of The Seas": {
+      "class": "voyager",
+      "year_built": 2000,
+      "last_amplified": 2015,
+      "extras": [],
+      "missing": ["Perfect Storm waterslides", "Splashaway Bay", "Playmakers", "Hooked Seafood"],
+      "notes": "FlowRider added 2015. Royal Amplified currently postponed indefinitely — least amplified of the class."
+    },
+    "Adventure Of The Seas": {
+      "class": "voyager",
+      "year_built": 2001,
+      "last_amplified": 2016,
+      "extras": ["Perfect Storm dual waterslides (rare among non-amplified hulls)"],
+      "missing": ["Splashaway Bay", "Playmakers", "Hooked Seafood", "Jamie's Italian"],
+      "notes": "Royal Amplified currently postponed indefinitely."
+    },
+    "Mariner Of The Seas": {
+      "class": "voyager",
+      "year_built": 2003,
+      "last_amplified": 2018,
+      "extras": [
+        "Perfect Storm racer slides",
+        "SkyPad VR trampoline",
+        "Laser tag",
+        "Bamboo Room tiki bar",
+        "Playmakers",
+        "Jamie's Italian",
+        "Izumi Hibachi",
+        "Splashaway Bay",
+        "Royal Escape Room"
+      ],
+      "missing": [],
+      "notes": "Most amenity-rich Voyager hull — competes with Navigator for \"best Voyager.\""
+    },
+    "Navigator Of The Seas": {
+      "class": "voyager",
+      "year_built": 2002,
+      "last_amplified": 2019,
+      "extras": [
+        "The Blaster — longest aqua coaster at sea",
+        "Riptide enclosed slide",
+        "Caribbean resort pool",
+        "Lime & Coconut bar",
+        "El Loco Fresh",
+        "Hooked Seafood",
+        "Johnny Rockets Express",
+        "Splashaway Bay",
+        "To Dry For blow-dry bar"
+      ],
+      "missing": ["Jamie's Italian"],
+      "notes": "Often called the most amplified non-Oasis ship in the fleet. Refreshed again March 2024."
+    },
+    "Radiance Of The Seas": {
+      "class": "radiance",
+      "year_built": 2001,
+      "last_amplified": 2016,
+      "extras": [
+        "Samba Grill (Brazilian churrascaria)",
+        "Boardwalk Dog House",
+        "Rita's Cantina",
+        "Park Cafe"
+      ],
+      "missing": [],
+      "notes": "Lead ship — most extensive specialty dining roster in the class."
+    },
+    "Brilliance Of The Seas": {
+      "class": "radiance",
+      "year_built": 2002,
+      "last_amplified": 2013,
+      "extras": ["Park Cafe", "Rita's Cantina"],
+      "missing": ["Samba Grill"],
+      "notes": "Caribbean and trans-ocean repositioning sailings."
+    },
+    "Serenade Of The Seas": {
+      "class": "radiance",
+      "year_built": 2003,
+      "last_amplified": 2018,
+      "extras": [],
+      "missing": ["Park Cafe", "Rita's Cantina"],
+      "notes": "Operated Royal's first 274-night Ultimate World Cruise in 2023–24."
+    },
+    "Jewel Of The Seas": {
+      "class": "radiance",
+      "year_built": 2004,
+      "last_amplified": 2016,
+      "extras": [],
+      "missing": ["Park Cafe", "Rita's Cantina", "Samba Grill"],
+      "notes": "Leanest specialty dining of the class. Deployed Europe/Caribbean."
+    },
+    "Grandeur Of The Seas": {
+      "class": "vision",
+      "year_built": 1996,
+      "last_amplified": 2012,
+      "extras": ["Izumi", "Giovanni's Table", "Park Cafe", "R Bar", "Centrum aerialist shows"],
+      "missing": [],
+      "notes": "Smallest of the 30 active ships at 73,817 GT. Sails Caribbean/Bermuda from Baltimore."
+    },
+    "Rhapsody Of The Seas": {
+      "class": "vision",
+      "year_built": 1997,
+      "last_amplified": 2012,
+      "extras": ["Giovanni's Table"],
+      "missing": ["Izumi"],
+      "notes": "Often deployed Australia/Mediterranean."
+    },
+    "Enchantment Of The Seas": {
+      "class": "vision",
+      "year_built": 1997,
+      "last_amplified": 2005,
+      "extras": [
+        "Bungee Trampoline",
+        "Splash deck for kids",
+        "Suspension bridges",
+        "Two main pools (post-stretch)",
+        "Small water slide (Splash Zone)"
+      ],
+      "missing": ["Izumi", "Giovanni's Table"],
+      "notes": "Largest Vision-class ship at 82,910 GT (only one in the class to be lengthened — added 73 ft in 2005). Deployed from Tampa/Galveston for short itineraries."
+    },
+    "Vision Of The Seas": {
+      "class": "vision",
+      "year_built": 1998,
+      "last_amplified": 2013,
+      "extras": ["Izumi", "Giovanni's Table", "Park Cafe"],
+      "missing": [],
+      "notes": "Sails Europe/Mediterranean."
+    }
+  }
+}
