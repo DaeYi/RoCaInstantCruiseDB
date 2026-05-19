@@ -161,6 +161,37 @@
       accent-color: var(--navy);
       cursor: pointer;
     }
+    .checkbox-group .cg-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .checkbox-group .cg-row > label {
+      flex: 1;
+      min-width: 0;
+    }
+    .btn-only {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      color: var(--navy);
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity .12s, background .12s, color .12s, border-color .12s;
+      flex-shrink: 0;
+    }
+    .cg-row:hover .btn-only,
+    .btn-only:focus { opacity: 1; outline: none; }
+    .btn-only:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    @media (hover: none) {
+      .btn-only { opacity: .75; }
+    }
     .badge {
       margin-left: auto;
       background: var(--off);
@@ -1081,6 +1112,46 @@ async function loadData() {
   }
 }
 
+// ── Filter row rendering ──────────────────────────────────────────────────
+function renderCheckboxOnlyGroup(groupId, values) {
+  const container = document.getElementById(groupId);
+  container.textContent = '';
+  for (const v of values) {
+    const row = document.createElement('div');
+    row.className = 'cg-row';
+
+    const label = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.value = v;
+    cb.checked = true;
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(' ' + v));
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn-only';
+    btn.dataset.value = v;
+    btn.title = 'Show only this';
+    btn.textContent = 'only';
+
+    row.appendChild(label);
+    row.appendChild(btn);
+    container.appendChild(row);
+  }
+}
+
+function attachOnlyHandler(groupId) {
+  document.getElementById(groupId).addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-only');
+    if (!btn) return;
+    const val = btn.dataset.value;
+    document.querySelectorAll(`#${groupId} input[type=checkbox]`)
+      .forEach(cb => { cb.checked = (cb.value === val); });
+    applyFilters();
+  });
+}
+
 // ── Populate Dynamic Filter Options ───────────────────────────────────────
 function populateFilterOptions() {
   // Stateroom types
@@ -1093,19 +1164,15 @@ function populateFilterOptions() {
     if (ib === -1) return -1;
     return ia - ib;
   });
-  const sg = document.getElementById('f-stateroom');
-  sg.innerHTML = staterooms.map(s =>
-    `<label><input type="checkbox" value="${s}" checked /> ${s}</label>`
-  ).join('');
+  renderCheckboxOnlyGroup('f-stateroom', staterooms);
 
   // Ports
   const ports = [...new Set(allCruises.map(c => portFull(c)).filter(Boolean))].sort();
-  document.getElementById('f-port').innerHTML = ports.map(p =>
-    `<label><input type="checkbox" value="${p}" checked /> ${p}</label>`
-  ).join('');
+  renderCheckboxOnlyGroup('f-port', ports);
 
   // Ships — group by class when shipsData is available
   const ships = [...new Set(allCruises.map(c => c.ship).filter(Boolean))].sort();
+  renderCheckboxOnlyGroup('f-ship', ships);
   const shipBox = document.getElementById('f-ship');
   if (shipsData?.classes && shipsData?.ships) {
     const order = shipsData.class_order || Object.keys(shipsData.classes);
@@ -1382,6 +1449,10 @@ function attachListeners() {
   // Dynamic checkboxes (stateroom added after load)
   document.getElementById('f-stateroom').addEventListener('change', applyFilters);
   document.getElementById('f-guests').addEventListener('change', applyFilters);
+  // "Only" buttons for stateroom / port / ship groups
+  attachOnlyHandler('f-stateroom');
+  attachOnlyHandler('f-port');
+  attachOnlyHandler('f-ship');
 }
 
 // ── Mobile Sidebar ─────────────────────────────────────────────────────────
