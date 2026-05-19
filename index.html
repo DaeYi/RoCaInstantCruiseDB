@@ -1113,32 +1113,34 @@ async function loadData() {
 }
 
 // ── Filter row rendering ──────────────────────────────────────────────────
+function buildCheckboxOnlyRow(value) {
+  const row = document.createElement('div');
+  row.className = 'cg-row';
+
+  const label = document.createElement('label');
+  const cb = document.createElement('input');
+  cb.type = 'checkbox';
+  cb.value = value;
+  cb.checked = true;
+  label.appendChild(cb);
+  label.appendChild(document.createTextNode(' ' + value));
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn-only';
+  btn.dataset.value = value;
+  btn.title = 'Show only this';
+  btn.textContent = 'only';
+
+  row.appendChild(label);
+  row.appendChild(btn);
+  return row;
+}
+
 function renderCheckboxOnlyGroup(groupId, values) {
   const container = document.getElementById(groupId);
   container.textContent = '';
-  for (const v of values) {
-    const row = document.createElement('div');
-    row.className = 'cg-row';
-
-    const label = document.createElement('label');
-    const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.value = v;
-    cb.checked = true;
-    label.appendChild(cb);
-    label.appendChild(document.createTextNode(' ' + v));
-
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'btn-only';
-    btn.dataset.value = v;
-    btn.title = 'Show only this';
-    btn.textContent = 'only';
-
-    row.appendChild(label);
-    row.appendChild(btn);
-    container.appendChild(row);
-  }
+  for (const v of values) container.appendChild(buildCheckboxOnlyRow(v));
 }
 
 function attachOnlyHandler(groupId) {
@@ -1172,7 +1174,6 @@ function populateFilterOptions() {
 
   // Ships — group by class when shipsData is available
   const ships = [...new Set(allCruises.map(c => c.ship).filter(Boolean))].sort();
-  renderCheckboxOnlyGroup('f-ship', ships);
   const shipBox = document.getElementById('f-ship');
   if (shipsData?.classes && shipsData?.ships) {
     const order = shipsData.class_order || Object.keys(shipsData.classes);
@@ -1189,16 +1190,7 @@ function populateFilterOptions() {
       header.className = 'ship-class-label';
       header.textContent = label;
       wrap.appendChild(header);
-      list.sort().forEach(name => {
-        const lbl = document.createElement('label');
-        const cb = document.createElement('input');
-        cb.type = 'checkbox';
-        cb.value = name;
-        cb.checked = true;
-        lbl.appendChild(cb);
-        lbl.appendChild(document.createTextNode(' ' + name));
-        wrap.appendChild(lbl);
-      });
+      list.sort().forEach(name => wrap.appendChild(buildCheckboxOnlyRow(name)));
       frag.appendChild(wrap);
     };
     order.forEach(cls => {
@@ -1208,16 +1200,7 @@ function populateFilterOptions() {
     shipBox.replaceChildren(frag);
   } else {
     const frag = document.createDocumentFragment();
-    ships.forEach(s => {
-      const lbl = document.createElement('label');
-      const cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.value = s;
-      cb.checked = true;
-      lbl.appendChild(cb);
-      lbl.appendChild(document.createTextNode(' ' + s));
-      frag.appendChild(lbl);
-    });
+    ships.forEach(s => frag.appendChild(buildCheckboxOnlyRow(s)));
     shipBox.replaceChildren(frag);
   }
 
