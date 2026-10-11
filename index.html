@@ -350,6 +350,8 @@
 
     .chip-1guest { background: #e3f2fd; color: #1a5276; }
     .chip-2guest { background: #e8f5e9; color: #1a5c3a; }
+    .chip-list   { background: var(--white); color: var(--navy); border: 1px solid var(--border); }
+    .filter-hint { font-size: 11px; line-height: 1.4; color: var(--muted); }
 
     .bonus-tag {
       display: inline-block;
@@ -890,6 +892,15 @@
       </select>
     </div>
 
+    <!-- Cruise Length (offer-code letter: A / C) -->
+    <div class="filter-section">
+      <div class="filter-label">My Cruise Length</div>
+      <select id="f-cruise-type">
+        <option value="">Any / not sure (show all)</option>
+      </select>
+      <div class="filter-hint">The cruise you earned your points on (the one you're on or just sailed), not the one you'll book. It's the letter after the 4 digits in your code: 2610<strong>A</strong>04 = A.</div>
+    </div>
+
     <!-- Points -->
     <div class="filter-section">
       <div class="filter-label">Points Required</div>
@@ -1006,7 +1017,7 @@
       <div id="empty-msg" class="empty" style="display:none">
         <div class="icon">🔍</div>
         <div>No cruises match your filters.</div>
-        <div style="font-size:12px;color:var(--muted)">Try adjusting your search criteria.</div>
+        <div id="empty-hint" style="font-size:12px;color:var(--muted);text-align:center;max-width:440px">Try adjusting your search criteria.</div>
       </div>
     </div>
 
@@ -1075,6 +1086,7 @@ async function fetchDecrypted(url) {
 // ── State ──────────────────────────────────────────────────────────────────
 let allCruises = [];
 let filteredCruises = [];
+let otherListMatches = 0;   // rows hidden ONLY by "My Cruise Length" (feeds the empty-state hint)
 let currentSort = 'sail_date';
 let availableMonths = [];
 let shipsData = null;
@@ -1212,6 +1224,15 @@ function populateFilterOptions() {
     o.textContent = formatYYMM(yymm);
     monthSel.appendChild(o);
   });
+
+  // My Cruise Length: one option per list letter present in the data (A, C, a future D…)
+  const typeSel = document.getElementById('f-cruise-type');
+  [...new Set(allCruises.map(c => cruiseTypeOf(c)).filter(Boolean))].sort().forEach(t => {
+    const o = document.createElement('option');
+    o.value = t;
+    o.textContent = CRUISE_TYPE_INFO[t]?.option || `Other list (${t} codes)`;
+    typeSel.appendChild(o);
+  });
 }
 
 // ── Filtering ──────────────────────────────────────────────────────────────
@@ -1223,6 +1244,7 @@ function getCheckedValues(groupId) {
 function applyFilters() {
   const search = document.getElementById('f-search').value.trim().toLowerCase();
   const sailingMonth = document.getElementById('f-sailing-month').value;
+  const cruiseType = document.getElementById('f-cruise-type').value;
   const ptsMin = parseInt(document.getElementById('f-points-min').value) || 0;
   const ptsMax = parseInt(document.getElementById('f-points-max').value) || Infinity;
   const dateFrom = document.getElementById('f-date-from').value;
@@ -1234,6 +1256,7 @@ function applyFilters() {
   const bonusOnly = document.getElementById('f-bonus-only').checked;
   const ports = getCheckedValues('f-port');
   const ships = getCheckedValues('f-ship');
+  otherListMatches = 0;
 
   filteredCruises = allCruises.filter(c => {
     if (sailingMonth && !(c.offer_code || '').startsWith(sailingMonth)) return false;
@@ -1252,6 +1275,8 @@ function applyFilters() {
         .join(' ').toLowerCase();
       if (!haystack.includes(search)) return false;
     }
+    // Keep LAST so rows hidden only by the list letter can be counted for the empty state.
+    if (cruiseType && cruiseTypeOf(c) !== cruiseType) { otherListMatches++; return false; }
     return true;
   });
 
@@ -1313,6 +1338,7 @@ function renderTable() {
   }
 
   if (sorted.length === 0) {
+    document.getElementById('empty-hint').textContent = emptyHintText();
     table.style.display = 'none';
     empty.style.display = 'flex';
     return;
@@ -1344,7 +1370,7 @@ function renderTable() {
       <td><span class="chip ${stClass}">${escHtml(c.stateroom_type||'—')}</span></td>
       <td><span class="chip ${gClass}">${c.guests ? c.guests + (c.guests===1?' Guest':' Guests') : '—'}</span></td>
       <td>${bonus}</td>
-      <td><button class="code-btn" onclick="copyCode(this,'${escHtml(c.offer_code)}')">${escHtml(c.offer_code||'—')}</button></td>
+      <td>${cruiseTypeChip(c)} <button class="code-btn" onclick="copyCode(this,'${escHtml(c.offer_code)}')">${escHtml(c.offer_code||'—')}</button></td>
     </tr>`;
   }).join('');
 
@@ -1389,10 +1415,61 @@ function formatYYMM(yymm) {
   return new Date(year, month, 1).toLocaleDateString('en-US', {month: 'long', year: 'numeric'});
 }
 
+// ── Cruise Type (offer-code letter A / C) ─────────────────────────────────
+// Offer codes are YYMM + letter + tier: 2610A04, 2610CVIP1, 2610A02A, 2610C03A.
+// The list letter is ALWAYS the 5th character (index 4). The trailing "A" in
+// 02A / 03A is a tier (9,000 / 4,000 pts), never the letter.
+// Per player reports (Royal Caribbean doesn't publish this), the letter reflects
+// the length of the cruise the points were EARNED on. It does NOT limit the
+// sailing you book: both lists contain 2–25 night sailings. So never infer it
+// from c.nights. All night wording derives from this one number.
+const SHORT_CRUISE_MAX_NIGHTS = 5;
+const CRUISE_TYPE_INFO = {
+  A: {
+    option: `${SHORT_CRUISE_MAX_NIGHTS} nights or fewer (A codes)`,
+    chip:   `Earned ≤${SHORT_CRUISE_MAX_NIGHTS}N`,
+    tip:    `A list: for points earned on a cruise of ${SHORT_CRUISE_MAX_NIGHTS} nights or fewer. It does not limit the cruise you book.`,
+  },
+  C: {
+    option: `${SHORT_CRUISE_MAX_NIGHTS + 1} nights or more (C codes)`,
+    chip:   `Earned ${SHORT_CRUISE_MAX_NIGHTS + 1}N+`,
+    tip:    `C list: for points earned on a cruise of ${SHORT_CRUISE_MAX_NIGHTS + 1} nights or more. It does not limit the cruise you book.`,
+  },
+};
+
+function cruiseTypeOf(c) {
+  const t = String(c.cruise_type || '').trim().toUpperCase();
+  if (/^[A-Z]$/.test(t)) return t;
+  // Fallback: offer_code[4], only when the code starts with YYMM + a letter
+  const code = String(c.offer_code || '').trim().toUpperCase();
+  return /^\d{4}[A-Z]/.test(code) ? code.charAt(4) : '';   // 2610AVIP1 → A, 2610C03A → C
+}
+
+function cruiseTypeChip(c) {
+  const t = cruiseTypeOf(c);
+  if (!t) return '';
+  const info = CRUISE_TYPE_INFO[t];
+  const text = info ? info.chip : `${t} list`;
+  const tip  = info ? info.tip  : `${t} list`;
+  return `<span class="chip chip-list" title="${escHtml(tip)}">${escHtml(text)}</span>`;
+}
+
+function emptyHintText() {
+  const t = document.getElementById('f-cruise-type').value;
+  if (t && otherListMatches) {
+    const n = otherListMatches;
+    return `Nothing on the ${t} list matches. ${n.toLocaleString()} offer${n === 1 ? '' : 's'} on other lists ` +
+      `do, but those are for points earned on a different cruise length. ` +
+      `Set "My Cruise Length" to "Any" to see them.`;
+  }
+  return 'Try adjusting your search criteria.';
+}
+
 // ── Reset ──────────────────────────────────────────────────────────────────
 function resetFilters() {
   document.getElementById('f-search').value = '';
   document.getElementById('f-sailing-month').value = '';
+  document.getElementById('f-cruise-type').value = '';
   document.getElementById('f-points-min').value = '';
   document.getElementById('f-points-max').value = '';
   document.getElementById('f-date-from').value = '';
@@ -1419,6 +1496,7 @@ function attachListeners() {
   };
   document.getElementById('f-search').addEventListener('input', debounce(applyFilters));
   document.getElementById('f-sailing-month').addEventListener('change', applyFilters);
+  document.getElementById('f-cruise-type').addEventListener('change', applyFilters);
   ['f-points-min','f-points-max','f-date-from','f-date-to','f-nights-min','f-nights-max'].forEach(id => {
     document.getElementById(id).addEventListener('change', applyFilters);
   });
@@ -1459,7 +1537,7 @@ function renderCards(sorted) {
   if (cardLoading) cardLoading.remove();
 
   if (sorted.length === 0) {
-    cardList.innerHTML = `<div class="empty"><div class="icon">🔍</div><div>No cruises match your filters.</div><div style="font-size:12px;color:var(--muted)">Try adjusting your search criteria.</div></div>`;
+    cardList.innerHTML = `<div class="empty"><div class="icon">🔍</div><div>No cruises match your filters.</div><div style="font-size:12px;color:var(--muted);text-align:center;padding:0 16px">${escHtml(emptyHintText())}</div></div>`;
     return;
   }
 
@@ -1496,6 +1574,7 @@ function renderCards(sorted) {
           <span class="chip ${stClass}">${escHtml(c.stateroom_type||'—')}</span>
           <span class="chip ${gClass}">${gLabel}</span>
           ${bonusHtml}
+          ${cruiseTypeChip(c)}
         </div>
         <button class="code-btn" onclick="copyCode(this,'${escHtml(c.offer_code)}')">${escHtml(c.offer_code||'—')}</button>
       </div>
